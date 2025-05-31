@@ -22,7 +22,7 @@ git clone https://github.com/Vertsineu/ctypart.git ~/.local/share/typst/packages
 After installing the package as a local package, you can import it in your Typst document like this:
 
 ```typst
-#import "@local/ctexart:0.1.0": *
+#import "@local/ctypart:0.1.0": *
 ```
 
 The package provides the following available variables:
