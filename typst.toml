@@ -1,0 +1,8 @@
+[package]
+name = "ctypart"
+version = "0.1.0"
+compiler = "0.13.1"
+entrypoint = "src/ctypart.typ"
+authors = ["Vertsineu <https://github.com/Vertsineu>"]
+license = "Apache-2.0"
+description = "A package imitating the ctexart document class in LaTeX."
