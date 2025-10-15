@@ -21,75 +21,80 @@
 
 /// 初始化页面整体样式
 #let init(
-    // 页面
-    paper: "a4",
-    margin: auto,
-    numbering: "1",
-    page-args: none,
-    // 字体
-    english-font: "New Computer Modern", 
-    english-emph-font: "New Computer Modern", 
-    english-strong-font: "New Computer Modern",
-    chinese-font: "FandolSong",
-    chinese-emph-font: "FandolKai",
-    chinese-strong-font: "FandolSong",
-    text-size: font-size-map.at("五号"),
-    text-args: none,
-    // 段落
-    par-indent: 2em, 
-    par-leading-rate: 1, // 行间距倍数
-    par-spacing-rate: 1, // 块间距倍数
-    par-leading: auto,
-    par-spacing: auto,
-    par-justify: true, 
-    par-args: none,
-    // 章节
-    heading-font: auto,
-    heading-size: (font-size-map.at("小三"), font-size-map.at("小四"), font-size-map.at("五号")), // 小三 小四 五号
-    heading-align: (center, auto), // 默认第一级标题居中
-    heading-spacing-top: 1.2em,
-    heading-spacing-bottom: 1.2em,
-    // 编号
-    heading-numbering: "1.1  ",
-    figure-numbering: "1",
-    equation-numbering: none,
+  // 页面
+  paper: "a4",
+  margin: auto,
+  numbering: "1",
+  page-args: none,
+  // 字体
+  english-font: "New Computer Modern", 
+  english-emph-font: "New Computer Modern", 
+  english-strong-font: "New Computer Modern",
+  chinese-font: "FandolSong",
+  chinese-emph-font: "FandolKai",
+  chinese-strong-font: "FandolSong",
+  text-size: font-size-map.at("五号"),
+  text-args: none,
+  // 段落
+  par-indent: 2em, 
+  par-leading-rate: 1, // 行间距倍数
+  par-spacing-rate: 1, // 块间距倍数
+  par-leading: auto,
+  par-spacing: auto,
+  par-justify: true, 
+  par-args: none,
+  // 章节
+  heading-font: auto,
+  heading-size: (font-size-map.at("小三"), font-size-map.at("小四"), font-size-map.at("五号")), // 小三 小四 五号
+  heading-align: (center, auto), // 默认第一级标题居中
+  heading-spacing-top: 1.2em,
+  heading-spacing-bottom: 1.2em,
+  // 编号
+  heading-numbering: "1.1  ",
+  figure-numbering: "1",
+  equation-numbering: none,
 
-    // 标题 作者 日期
-    title: none,
-    title-text-args: (size: font-size-map.at("小二"),), // 小二
-    author: none,
-    author-text-args: (size: font-size-map.at("小四"),), // 小四
-    date: none,
-    date-text-args: (size: font-size-map.at("小四"),), // 小四
-    make-title: false,
-    title-page: false,
-    title-spacing-bottom: 1.5em,
+  // 标题 作者 日期
+  title: none,
+  title-text-args: (size: font-size-map.at("小二"),), // 小二
+  author: none,
+  author-text-args: (size: font-size-map.at("小四"),), // 小四
+  date: none,
+  date-text-args: (size: font-size-map.at("小四"),), // 小四
+  make-title: false,
+  title-page: false,
+  title-spacing-bottom: 1.5em,
 
-    // 目录
-    make-outline: false,
-    outline-args: (indent: auto,),
-    outline-spacing: 1.35em,
+  // 目录
+  make-outline: false,
+  outline-args: (indent: auto,),
+  outline-spacing: 1.35em,
 
-    // 摘要
-    abstract: none,
-    abstract-text-args: (size: font-size-map.at("小五"),),
+  // 摘要
+  abstract: none,
+  abstract-text-args: (size: font-size-map.at("小五"),),
 
-    // 关键词
-    keywords: none,
-    keywords-text-args: (size: font-size-map.at("小五"),),
+  // 关键词
+  keywords: none,
+  keywords-text-args: (size: font-size-map.at("小五"),),
 
-    // 索引
-    bookmarked: false,
+  // 索引
+  bookmarked: false,
+
+  body
+) = {
   
-    body
-  ) = {
-  
-  // return arr[i]
-  // if illegal or empty, return none
-  // if out of bound, return the last element
-  let array-at(arr, i) = {
-    if type(arr) != array or arr.len() == 0 or i < 0 { none }
-    else { arr.at(calc.min(i, arr.len()) - 1) }
+  /// at function of array with index extended to out of range
+  let array-at-extend(arr, idx) = {
+    if (type(arr) != array) {
+      panic("First argument must be an array")
+    }
+    if (type(idx) != int) {
+      panic("Index must be an integer")
+    }
+    if (idx < 0) { idx = 0 }
+    if (idx >= arr.len()) { idx = arr.len() - 1 }
+    arr.at(idx)
   }
 
   par-leading = if par-leading == auto {par-leading-rate * 15.6pt - 0.7em} else {par-leading} // 行间距
@@ -135,8 +140,8 @@
   show heading: it => {
     // 3.1 章节字体与字号
     set text(
-      font: array-at(heading-font, it.level),
-      size: array-at(heading-size, it.level),
+      font: array-at-extend(heading-font, it.level),
+      size: array-at-extend(heading-size, it.level),
     )
     heading-spacing-top-v
     it
@@ -146,7 +151,7 @@
 
   show heading: it => {
     // 3.2 章节对齐
-    let al = array-at(heading-align, it.level)
+    let al = array-at-extend(heading-align, it.level)
     if (al != none and al != auto) {
       set align(al)
       it
