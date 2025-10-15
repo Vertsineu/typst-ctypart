@@ -1,4 +1,4 @@
-# ctypart
+# typst-ctypart
 
 A Typst package imitating the `\documentclass{ctexart}` in LaTeX.
 
