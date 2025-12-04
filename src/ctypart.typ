@@ -108,7 +108,6 @@
   set text(font: (english-font, chinese-font), size: text-size, lang: "zh", region: "cn", ..{if text-args != none {text-args}})
   show emph: set text(font: (english-emph-font, chinese-emph-font))
   show strong: set text(font: (english-strong-font, chinese-strong-font))
-  show enum: set text(font: (chinese-font, english-font))
 
   // 2 段落
   // 2.1 段落设置
@@ -213,12 +212,6 @@
       }
     }
   )
-
-  // 6 调整行内公式
-  // show math.equation.where(block: false): it => context {
-  //   let width = measure(block("-")).width // 一个空格的宽度
-  //   h(width, weak: true) + it + h(width, weak: true)
-  // }
 
   // create a transparent box
   let transparent-box = (it) => {
